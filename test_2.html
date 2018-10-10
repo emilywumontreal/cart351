@@ -1,0 +1,67 @@
+
+<!doctype html>
+<html>
+  <head>
+    <script type='text/javascript' src='libraries/p5.min.js'></script>
+    <script type='text/javascript' src='libraries/p5.sound.js'></script>
+    <script type='text/javascript' src='libraries/p5.dom.js'></script>
+
+    <style>
+      html, body {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        background:white;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+//https://creative-coding.decontextualize.com/sketches/09_webcam_video_mirror.html
+var cap;
+function setup() {
+  createCanvas(320, 240);
+  cap = createCapture(VIDEO);
+  cap.size(320,240);
+  cap.hide();
+  rectMode(CENTER);
+  noStroke();
+}
+function draw() {
+  background(50);
+  fill(255);
+  cap.loadPixels();
+  /*for (var cy = 0; cy < cap.height; cy += 10) {
+    for (var cx = 0; cx < cap.width; cx += 5) {
+      var offset = ((cy*cap.width)+cx)*4;
+      var xpos = (cx / cap.width) * width;
+      var ypos = (cy / cap.height) * height;
+      rect(xpos, ypos, 10,
+        10 * (cap.pixels[offset+1]/255));
+    }
+  }*/
+  let r;
+  let g;
+  let b;
+  for (var y = 0; y < cap.height; y++) {
+    for (var x = 0; x < cap.width; x++ ) {
+      // Calculate the 1D location from a 2D grid
+      var loc = (x + y*cap.width)*4;// RGBA (each pixel has 4 vals)
+        r = cap.pixels[loc];
+       g = cap.pixels[loc+1];
+       b = cap.pixels[loc+2];
+       a =125;
+      cap.pixels[loc+3] =a;
+
+  //    fill(r,g,b,a);
+    //  rect(x, y, 1,1);
+    }
+  }
+  //for debugging...
+  console.log(cap.pixels[0]);
+  cap.updatePixels();
+}
+
+    </script>
+  </body>
+</html>
